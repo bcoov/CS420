@@ -1,0 +1,25 @@
+CS420
+HW1
+To be submitted in class.
+
+1) What is the purpose of system calls?
+
+    Interface to the OS's operations/services. Typically called via an API instead
+    of directly calling the system call.
+
+2) Describe three general methods for passing parameters to the operating system.
+
+    - Registers
+    - Stored in memory block/table and accessed via passing the address location
+    - Placed onto stack to be popped off by the OS
+
+3) What are the two models of interprocess communication?
+   What are the strengths and weaknesses of the two approaches?
+
+   - Message passing
+    -
+   - Shared memory
+    - 
+
+4) What are some of the advantages of the microkernel approach to system design?
+   What are some of the disadvantages of using the microkernel approach?
