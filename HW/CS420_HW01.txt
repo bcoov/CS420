@@ -17,9 +17,20 @@ To be submitted in class.
    What are the strengths and weaknesses of the two approaches?
 
    - Message passing
-    -
+    - (Pro) Messages cause work to remain separated to avoid modification of
+      other worker's data
+    - (Con) All arguments must be copied into the new message
    - Shared memory
-    - 
+    - (Pro) Allows processes to run concurrently
+    - (Pro) Once initiated, processes are treated like typical memory accesses
+    - (Con) Must be properly synchronized since all processes access the same
+      data simultaneously
 
 4) What are some of the advantages of the microkernel approach to system design?
    What are some of the disadvantages of using the microkernel approach?
+
+   - Advantages
+    - Easier to extend and port to new architectures
+    - Less code running in kernel mode and more secure
+   - Disadvantages
+    - Performance overhead
