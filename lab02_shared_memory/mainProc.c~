@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     struct ipc_struct * shared_memory = (struct ipc_struct*) shmat(NULL, shmem, NULL);
 
-    shared_memory->repeat_val = atoi(argv[1]);
+    shared_memory->repeat_val = (int) argv[1];
 
     pid_t pid = fork();
 

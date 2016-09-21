@@ -5,6 +5,20 @@
 #define BUFFER_SIZE 128
 #endif
 
+// Streamline message/error reporting
+void write_msg(int loc, char * msg, int error) {
+    char msg_str[50];
+    int msg_len;
+
+    strcpy(msg_str, msg);
+    msg_len = strlen(msg_str);
+    write(loc, msg_str, msg_len);
+
+    // Indicate that this message is an error and exit program
+    if (error != 0) {
+        exit(-1);
+    }
+}
 
 struct ipc_struct {
     int  repeat_val;
