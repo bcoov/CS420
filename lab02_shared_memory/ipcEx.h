@@ -5,6 +5,8 @@
 #define BUFFER_SIZE 128
 #endif
 
+#include <string.h>
+
 // Streamline message/error reporting
 void write_msg(int loc, char * msg, int error) {
     char msg_str[50];
