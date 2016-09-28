@@ -29,8 +29,11 @@ int main(int argc, char** argv)
 
     // Child process
     if (pid == 0) {
-        execlp("./childProc", (char *) shmem, (char *) NULL);
+        printf("Child process\n");
+        // Use sprintf or snprintf here
+        execlp("./childProc", (char *) shmem, NULL);
     } else {
+        printf("Parent process (waiting)\n");
         wait(NULL);
 
         printf(shared_memory->data);
