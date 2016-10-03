@@ -160,10 +160,10 @@ d) Which of the algorithms results in the minimum average waiting time (over all
      - Assuming it is not the only process for the duration of its working time,
        the double-pointered process would finish in half the time it normally would
        due to having twice the periods on the CPU
-     - 
+     - ?
     Cons:
-     - 
-     - 
+     - Redundant memory usage (identical pointers)
+     - Could delay other important processes too long causing an overall system slowdown
 
  c) How would you modify the basic RR algorithm to achieve the same effect without the
     duplicate pointers?
