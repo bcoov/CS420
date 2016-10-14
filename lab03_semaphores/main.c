@@ -18,10 +18,18 @@ int main(int argc, char** argv)
     int num_procs = 0;      // DO NOT MODIFY THIS VARIABLE NAME
     int num_threads = 0;    // DO NOT MODIFY THIS VARIABLE NAME
     
-    
     // TODO: parse arguments
-    
-    
+    int opt;
+    while ((opt = getopt(argc, argv, "p:f:t:")) != -1) {
+        switch (opt) {
+        case 'p':
+            num_procs = atoi(optarg);
+        case 't':
+            num_threads = atoi(optarg);
+        case 'f':
+            filename = optarg;
+        }
+    }
     
     // TODO: write initial '0' to file
     
