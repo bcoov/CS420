@@ -32,23 +32,38 @@ int main(int argc, char** argv)
     }
     
     // TODO: write initial '0' to file
+    FILE * output = open_file(filename, "w");
+    int fd = fileno(output);
     
-    
+    write(fd, "0", 1);
+    close(fd);
 
     // TODO: create a named semaphore
-    
-    
+    sem_t * sema4 = sem_open("bcoover", O_CREAT | O_EXCL, S_IRWXU, 1);    
     
     // TODO: fork off child processes and wait for them to finish
-
+    printf("Preparing to fork %d child processes...\n", num_procs);
+    int pids[num_procs];
+    int proc = 0;
     
+    for (int i = 0; i < num_procs; ++i) {
+        char num[10];
+        sprintf(num, "%d", i);
+        pids[i] = fork();
+        if (pids[i] == 0) {
+            execlp("./fileWriter", num, NULL);
+        }
+    }
+    // Wait for each process to finish
+    while (proc < num_procs) {
+        wait(NULL);
+        proc++;
+    }
     
     // TODO: clean up and close named semaphore
-    
-    
-    
-    
-    
+    printf("Cleaning up semaphore...\n");
+    sem_close(sema4);
+    sem_unlink("bcoover");
     
     
     /////////////////////////////////////////////////////////////////////////////////////
