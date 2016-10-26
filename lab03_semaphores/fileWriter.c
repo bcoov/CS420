@@ -13,8 +13,8 @@
 
 int main(int argc, char** argv)
 {
-
-    
+    int i = atoi(argv[0]);
+    printf("Process %d says \"Hello, World!\"\n", i);
     
     return 0;
 }
