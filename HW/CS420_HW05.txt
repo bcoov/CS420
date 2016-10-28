@@ -1,0 +1,83 @@
+CS420											Ben Coover
+HW5
+To be submitted in class.
+
+
+1) Consider the deadlock situation that could occur in the dining-philosophers 
+problem when the philosophers obtain the chopsticks one at a time. Discuss how the 
+four necessary conditions for deadlock indeed hold in this setting. Discuss how 
+deadlocks could be avoided by eliminating any one of the four conditions.
+
+	Mutual Exclusion: A Chopstick can be held by only one philosopher at a time
+	Hold and Wait: Philosophers need two chopsticks to eat, so will be waiting for
+				   their second to become available
+    No Preemption of Resources: No system is in place in the Philosopher problem to
+                                preempt the holding of a Chopstick
+    Circular Wait: Each Philosopher is waiting for their 2nd chopstick, which is held
+                   by their neighbor, who is waiting for their 2nd chopstick, which is
+                   held by *their* neighbor, etc...
+
+    Deadlock will not exist if less than all four conditions are active. For example,
+    if the Circular Wait condition does not hold, then there exists a Philosopher who
+    is waiting on the opposite neighbor than the rest (left in this case). This would
+    mean that this Philosopher attempted to grab a Chopstick from the opposite
+    direction (right being the original direction) than the rest, which would leave
+    the Chopstick on his right available to grab, regardless on whether or not he
+    successfully grabbed his left Chopstick or not. The Philosopher to his right
+    could then grab the remaining Chopstick, giving him two and allowing him to eat.
+
+
+2) Consider a system consisting of four resources of the same type that are shared 
+by three processes, each of which needs at most two resources. Show that the system is 
+deadlock-free.
+
+
+
+
+
+
+
+
+
+
+
+3) Consider the following snapshot of a system:
+
+    Process     Allocation         Max         Available
+    -------    ------------    -----------    -----------
+                 A B C D         A B C D        A B C D
+    -------    ------------    -----------    -----------
+      P0         0 0 1 2         0 0 1 2        1 5 2 0
+      P1         1 0 0 0         1 7 5 0
+      P2         1 3 5 4         2 3 5 6
+      P3         0 6 3 2         0 6 5 2
+      P4         0 0 1 4         0 6 5 6
+
+Answer the following questions using the banker’s algorithm:
+
+a) What is the content of the matrix Need?
+         Need
+    -----------
+        A B C D
+    -----------
+    P0  0 0 0 0
+    P1  0 7 5 0
+    P2  1 0 0 2
+    P3  0 0 2 0
+    P4  0 6 4 2
+
+b) Is the system in a safe state?  If so, provide a sequence that would allow all 
+processes to run to completion
+
+    System is in a safe state (P0 can run right away)
+    P0 -> P2 -> P3 -> P1 -> P4
+
+c) If a request from process P1 arrives for (0,4,2,0), can the request be granted 
+immediately (i.e. would the system still be in a safe state if the request were
+granted)?  If so, provide a safe sequence that would allow all processes to run to
+completion.
+
+    System will remain in a safe state (P0 can still run and will give up
+                                        enough resources to allow others to run)
+
+    P0 -> P2 -> P1 -> P3 -> P4
