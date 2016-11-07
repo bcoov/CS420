@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     FILE * output = open_file(filename, "w");
     int fd = fileno(output);
     
-    write(fd, "0", 1);
-    close(fd);
+    write(fd, "0\n", 2);
+    close_file(output);
 
     // TODO: create a named semaphore
     sem_t * sema4 = sem_open("bcoover", O_CREAT | O_EXCL, S_IRWXU, 1);    
@@ -45,13 +45,15 @@ int main(int argc, char** argv)
     printf("Preparing to fork %d child processes...\n", num_procs);
     int pids[num_procs];
     int proc = 0;
+    char thread[10];
+    sprintf(thread, "%d", num_threads);
     
     for (int i = 0; i < num_procs; ++i) {
         char num[10];
         sprintf(num, "%d", i);
         pids[i] = fork();
         if (pids[i] == 0) {
-            execlp("./fileWriter", num, NULL);
+            execlp("./fileWriter", num, thread, filename, NULL);
         }
     }
     // Wait for each process to finish
