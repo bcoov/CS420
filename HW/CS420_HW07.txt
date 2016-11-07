@@ -1,0 +1,94 @@
+CS420                                                           Ben Coover
+HW7
+To be submitted in class.
+
+
+1) A certain computer provides its users with a virtual-memory space of 2^32 bytes. 
+The computer has 2^18 bytes of physical memory. The virtual memory is implemented by 
+paging, and the page size is 4096 bytes. A user process generates the virtual address 
+11123456. Explain how the system establishes the corresponding physical location. 
+
+    - The system will determine the physical location of the virtual memory adress by
+    first splitting the address into its page number and page offset portions. It can
+    then determine the frame that the page is located in (or place it in one if it isn't
+    yet). Following that, the system will multiply the page size by the page number, and
+    then adding the offset to that result. This total will give the physical address in
+    memory.
+
+2) When a page fault occurs, the process requesting the page must block while waiting 
+for the page to be brought from disk into physical memory. Assume there exists a process 
+with five user-level threads where the mapping of user threads to kernel threads is 
+many-to-one. If one user thread incurs a page fault while accessing its stack, would the 
+other user threads belonging to the same process also be affected by the page fault 
+(i.e., would they also have to wait for the faulting page to be brought into memory?) 
+Explain.
+
+    - Threads do not share stacks amongst each other, so in a different situation, the
+    other threads would not be affected. However, since this is a many-to-one setup,
+    they will be affected since the entire process will block if any of its child
+    processes block for any reason
+
+3) The table below is a page table for a system with 12-bit virtual and physical addresses 
+with 256-byte pages. The list of free page frames is D, E, F (that is, D is at the head 
+of the list, E is second, and F is last.)
+
+  +-------+------------+
+  | Page  | Page Frame |
+  +-------+------------+
+  |  0    |     -      |
+  |  1    |     2      |
+  |  2    |     C      |
+  |  3    |     A      |
+  |  4    |     -      |
+  |  5    |     4      |
+  |  6    |     3      |
+  |  7    |     -      |
+  |  8    |     B      |
+  |  9    |     0      |
+  +-------+------------+
+
+Given the following virtual addresses, convert them to their equivalent physical addresses 
+in hexadecimal. All numbers are given in hexadecimal. (A dash for a page frame indicates 
+the page is not in memory.)
+
+    a) 9EF (2,543)
+        page 9, offset 239 => (0 * 256) + 239 => 239 = 0x0EF
+    b) 111 (273)
+        page 1, offset 17 => (2 * 256) + 17 => 529 = 0x211
+    c) 700 (1,792)
+        page 7, offset 0 => fault, load in frame D => (13 * 256) + 0 => 3328 = 0xD00
+    d) 0FF (255)
+        page 0, offset 255 => fault, load in frame E => (14 * 256) + 255 => 3839 = 0xEFF
+
+4) Consider the following page reference string:
+
+     1, 2, 3, 4, 2, 1, 5, 6, 2, 1, 2, 3, 7, 6, 3, 2, 1, 2, 3, 6
+
+How many page faults would occur for the following replacement algorithms, 
+assuming one, two, three, four, five, six, or seven frames?  Remember all frames 
+are initially empty, so your first unique pages will all cost one fault each.
+
+    a) LRU replacement
+        1: 20 faults; No references are repeated resulting in a fault each time
+        2: 18 faults; 2 references will still be in memory when they arrive
+        3: 15 faults
+        4: 9 faults
+        5: 8 faults
+        6: 7 faults; Ref for 7 will kick out 4, which is no longer used
+        7: 7 faults; All will be in memory past the first reference for each
+    b) FIFO replacement
+        1: 20 faults; No references are repeated resulting in a fault each time
+        2: 18 faults
+        3: 16 faults
+        4: 14 faults
+        5: 10 faults
+        6: 10 faults
+        7: 7 faults; All will be in memory past the first reference for each
+    c) Optimal replacement
+        1: 20 faults; No references are repeated resulting in a fault each time
+        2: 14 faults
+        3: 10 faults
+        4: 8 faults
+        5: 7 faults
+        6: 7 faults
+        7: 7 faults; All will be in memory past the first reference for each
